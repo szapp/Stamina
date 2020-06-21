@@ -1,0 +1,30 @@
+Model ("HuS")
+{
+    meshAndTree ("Hum_Body_Naked0.ASC" DONT_USE_MESH)
+
+    aniEnum
+    {
+        aniDisable("s_FistAttack")
+        aniDisable("t_FistAttackMove")
+        aniDisable("t_FistParade_0")
+        // aniDisable("t_FistParadeJumpB")
+
+        aniDisable("s_1hAttack")
+        aniDisable("t_1hAttackL")
+        aniDisable("t_1hAttackR")
+        aniDisable("t_1hAttackMove")
+        aniDisable("t_1hParade_0")
+        aniDisable("t_1hParade_0_A2")
+        aniDisable("t_1hParade_0_A3")
+        // aniDisable("t_1hParadeJumpB")
+
+        aniDisable("s_2hAttack")
+        aniDisable("t_2hAttackL")
+        aniDisable("t_2hAttackR")
+        aniDisable("t_2hAttackMove")
+        aniDisable("t_2hParade_0")
+        aniDisable("t_2hParade_0_A2")
+        aniDisable("t_2hParade_0_A3")
+        // aniDisable("t_2hParadeJumpB")
+    }
+}
