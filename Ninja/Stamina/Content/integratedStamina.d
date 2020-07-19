@@ -94,7 +94,7 @@ func void Ninja_Stamina_IntegratedStamina() {
     var int fists; fists = (npc.fmode == FMODE_FIST);
     var int twoHanded; twoHanded = (npc.fmode == 4);
     var int start; start = ((ai.bitfield & /*endCombo*/2) != 0);
-    var int firstHit; firstHit = (start) && (!ai.lastHitAniFrame);
+    var int firstHit; firstHit = (start) && (truncf(ai.lastHitAniFrame) < 6); // Tolerance for non-combo animations
     var int parade; parade = FALSE;
     if (start) {
         ai.hitAniID = EAX;
