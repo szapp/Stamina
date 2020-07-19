@@ -121,6 +121,9 @@ func void Ninja_Stamina_IntegratedSprint() {
         };
     } else if (Ninja_Stamina_Mdl_OverlayMdsIsActive(hero, Ninja_Stamina_SprintMDS)) {
         Mdl_RemoveOverlayMds(her, Ninja_Stamina_SprintMDS);
+        if (Npc_HasReadiedRangedWeapon(hero)) {
+            AI_Teleport(hero, "PC_HERO");
+        };
     };
 };
 
