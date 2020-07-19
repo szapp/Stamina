@@ -362,13 +362,16 @@ func void Breath_Init_slow() {
     var int oncePerSave;
     if (!oncePerSave) {
         Breath_SetRegeneration(2000);
-        _Breath_player     = mkf(30000); // Npc defaults
-        _Breath_player_max = mkf(30000); // Npc defaults
+        _Breath_player     = mkf(30000); // NPC defaults
+        _Breath_player_max = mkf(30000); // NPC defaults
         oncePerSave = TRUE;
     } else if (Hlp_IsValidNpc(hero)) {
         // Hero only exists at this point if a game is being loaded or the world is changed: exactly what we want
         var oCNpc her; her = Hlp_GetNpc(hero);
-        her.divetime = _Breath_player_max;
+        if (her.divetime == mkf(30000)) {
+            // Double check, in case it was changed elsewhere already (e.g. Init_Global)
+            her.divetime = _Breath_player_max;
+        };
         her.divectr  = _Breath_player;
     };
 
@@ -468,14 +471,17 @@ func void Breath_Init() {
     var int oncePerSave;
     if (!oncePerSave) {
         Breath_SetRegeneration(2000);
-        _Breath_player     = mkf(30000); // Npc defaults
-        _Breath_player_max = mkf(30000); // Npc defaults
+        _Breath_player     = mkf(30000); // NPC defaults
+        _Breath_player_max = mkf(30000); // NPC defaults
         oncePerSave = TRUE;
     } else if (Hlp_IsValidNpc(hero)) {
         // Restore breath values for player
         // Hero only exists at this point if a game is being loaded or the world is changed: exactly what we want
         var oCNpc her; her = Hlp_GetNpc(hero);
-        her.divetime = _Breath_player_max;
+        if (her.divetime == mkf(30000)) {
+            // Double check, in case it was changed elsewhere already (e.g. Init_Global)
+            her.divetime = _Breath_player_max;
+        };
         her.divectr  = _Breath_player;
     };
 
