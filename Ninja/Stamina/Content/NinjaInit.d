@@ -47,6 +47,13 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
             if (!MEM_GothOptExists("KEYS", "keyIntSprint")) { MEM_SetKeys("keyIntSprint", KEY_V, KEY_PERIOD); };
         };
 
+        // Set MDS overlay according to Gothic version
+        if (GOTHIC_BASE_VERSION == 1) {
+            Ninja_Stamina_DisableMDS = Ninja_Stamina_DisableMDS_G1;
+        } else {
+            Ninja_Stamina_DisableMDS = Ninja_Stamina_DisableMDS_G2;
+        };
+
         once = 1;
     };
 

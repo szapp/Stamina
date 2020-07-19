@@ -5,14 +5,16 @@ VDFName=.\Stamina.vdf
 
 [FILES]
 ; Resources (list the specific files from _work here)
-_work\Data\Anims\_compiled\STAMINA_HUMANS_DISABLE_MELEE.MDH
-_work\Data\Anims\_compiled\STAMINA_HUMANS_DISABLE_MELEE.MSB
+_work\Data\Anims\_compiled\STAMINA_HUMANS_DISABLE_MELEE_G1.MDH
+_work\Data\Anims\_compiled\STAMINA_HUMANS_DISABLE_MELEE_G2.MDH
+_work\Data\Anims\_compiled\STAMINA_HUMANS_DISABLE_MELEE_G2.MSB
 _work\Data\Anims\_compiled\STAMINA_HUMANS_SPRINT_CLEAN-S_RUNL.MAN
 _work\Data\Anims\_compiled\STAMINA_HUMANS_SPRINT_CLEAN-T_RUN_2_RUNL.MAN
 _work\Data\Anims\_compiled\STAMINA_HUMANS_SPRINT_CLEAN-T_RUNL_2_RUN.MAN
 _work\Data\Anims\_compiled\STAMINA_HUMANS_SPRINT_CLEAN.MDH
 _work\Data\Anims\_compiled\STAMINA_HUMANS_SPRINT_CLEAN.MSB
-_work\Data\Anims\MDS_Overlay\STAMINA_HUMANS_DISABLE_MELEE.MDS
+_work\Data\Anims\MDS_Overlay\STAMINA_HUMANS_DISABLE_MELEE_G1.MDS
+_work\Data\Anims\MDS_Overlay\STAMINA_HUMANS_DISABLE_MELEE_G2.MDS
 _work\Data\Anims\MDS_Overlay\STAMINA_HUMANS_SPRINT_CLEAN.MDS
 
 ; Script files
