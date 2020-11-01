@@ -97,9 +97,8 @@ func int Ninja_Stamina_Npc_IsRunning(var C_Npc slf) {
 func void Ninja_Stamina_IntegratedSprint() {
     const int THRESHOLD_MS             = 1161527296; // 3000.0f
     const int ACTION_WATERWALK         = 4;          // oCAniCtrl_Human.actionMode
-    const int FMODE_FAR                = 5;
-    const int oCNpc__SetWeaponMode2_G1 = 6904416; //0x695A60
-    const int oCNpc__SetWeaponMode2_G2 = 7573120; //0x738E80
+    const int oCNpc__SetWeaponMode2_G1 = 6904416;    //0x695A60
+    const int oCNpc__SetWeaponMode2_G2 = 7573120;    //0x738E80
 
     var oCNpc her; her = Hlp_GetNpc(hero);
     var oCAniCtrl_Human ai; ai = _^(her.human_ai);
@@ -130,12 +129,13 @@ func void Ninja_Stamina_IntegratedSprint() {
             // Fix ranged combat by re-initializing weapon mode
             if (Npc_HasReadiedRangedWeapon(hero)) {
                 var int herPtr; herPtr = _@(her);
+                var int fmode; fmode = her.fmode;
                 var int zero;
                 const int call = 0;
                 if (CALL_Begin(call)) {
                     CALL_IntParam(_@(zero));
                     CALL__thiscall(_@(herPtr), MEMINT_SwitchG1G2(oCNpc__SetWeaponMode2_G1, oCNpc__SetWeaponMode2_G2));
-                    CALL_IntParam(_@(FMODE_FAR));
+                    CALL_IntParam(_@(fmode));
                     CALL__thiscall(_@(herPtr), MEMINT_SwitchG1G2(oCNpc__SetWeaponMode2_G1, oCNpc__SetWeaponMode2_G2));
                     call = CALL_End();
                 };
