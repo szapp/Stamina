@@ -20,6 +20,7 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         // Set non-existing values
         MEM_Info("Stamina: Initializing entries in Gothic.ini.");
         if (!MEM_GothOptExists("STAMINA", "sprintTotalSec"  )) { MEM_SetGothOpt("STAMINA", "sprintTotalSec",   "15"); };
+        if (!MEM_GothOptExists("STAMINA", "supplySprintAni" )) { MEM_SetGothOpt("STAMINA", "supplySprintAni",   "1"); };
         if (!MEM_GothOptExists("STAMINA", "fistFirstHitCost")) { MEM_SetGothOpt("STAMINA", "fistFirstHitCost", "10"); };
         if (!MEM_GothOptExists("STAMINA", "fistComboCost"   )) { MEM_SetGothOpt("STAMINA", "fistComboCost",     "7"); };
         if (!MEM_GothOptExists("STAMINA", "fistParadeCost"  )) { MEM_SetGothOpt("STAMINA", "fistParadeCost",    "4"); };
@@ -41,6 +42,9 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         Ninja_Stamina_2H_FIRSTHIT   = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hFirstHitCost"  ));
         Ninja_Stamina_2H_COMBO      = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hComboCost"     ));
         Ninja_Stamina_2H_PARADE     = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hParadeCost"    ));
+        if (!STR_ToInt(MEM_GetGothOpt("STAMINA", "supplySprintAni" ))) {
+            Ninja_Stamina_SprintMDS = "HUMANS_SPRINT.MDS";
+        };
 
         // Set integrated sprint keys if desired only
         if (Ninja_Stamina_SPRINTTIME > 0) && (!Ninja_Stamina_IntegratedSprintExists) {
