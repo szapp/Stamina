@@ -4,20 +4,20 @@
  *
  * Collection of functions that expose the swim bar for generalized use (e.g. stamina, breath).
  *
- * - Requires Ikarus
+ * - Requires Ikarus 1.2.2
  * - Compatible with Gothic 1 and Gothic 2
  *
  * Instructions
  * - Initialize from Init_Global with these two lines
  *     Breath_Init();
- *     Breath_SetBarVisibleNonEmpty();   - OR -   Breath_SetBarVisibleAways();
+ *     Breath_SetBarVisibleNonEmpty();   - OR -   Breath_SetBarVisibleAlways();
  *
  *
  * Initialize the regeneration and bar visibility (call from Init_Global)
  *  func void Breath_Init()
  *
  * Set visibility of swim bar (to be called optionally AFTER Breath_Init)
- *  func void Breath_SetBarVisibleAways()
+ *  func void Breath_SetBarVisibleAlways()
  *  func void Breath_SetBarVisibleNonEmpty()
  *
  * Get/set maximum breath, load/save-persistent for player only. Default is 30000 ms (30 sec)
@@ -283,7 +283,7 @@ func void Breath_SetBarVisible(var int always) {
         };
     } else {
         // Revert the above change
-        if (MEM_ReadInt(  addr1) ==  /*EB 28 A4 00*/10758379) {      // Compare 4 bytes, because of third-party changes
+        if (MEM_ReadInt(  addr1) ==  /*EB 1C A4 00*/10755307) {      // Compare 4 bytes, because of third-party changes
             MEM_WriteByte(addr1,     /*0F*/ 15);                     // jz
             MEM_WriteByte(addr1+1,   /*84*/132);
         };
@@ -300,7 +300,7 @@ func void Breath_SetBarVisible(var int always) {
         };
     };
 };
-func void Breath_SetBarVisibleAways() {
+func void Breath_SetBarVisibleAlways() {
     Breath_SetBarVisible(TRUE);
 };
 func void Breath_SetBarVisibleNonEmpty() {
