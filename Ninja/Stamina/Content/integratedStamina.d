@@ -22,7 +22,7 @@
  *     IntegratedStamina_1H_COMBO      = 10;
  *
  *
- * Note: All symbols are prefixed with "Ninja_Stamina_" to not interfere with the mod. Remove if using somewhere else!
+ * Note: All symbols are prefixed with "Patch_Stamina_" to not interfere with the mod. Remove if using somewhere else!
  */
 
 // In this patch, these symbols are defined elsewhere with different names
@@ -42,7 +42,7 @@
 /*
  * Check if an MDS overlay of given name is active
  *
-func int Ninja_Stamina_Mdl_OverlayMdsIsActive(var C_Npc slf, var string mdsName) {
+func int Patch_Stamina_Mdl_OverlayMdsIsActive(var C_Npc slf, var string mdsName) {
     var oCNpc npc; npc = Hlp_GetNpc(slf);
     mdsName = STR_Upper(mdsName);
 
@@ -60,7 +60,7 @@ func int Ninja_Stamina_Mdl_OverlayMdsIsActive(var C_Npc slf, var string mdsName)
 /*
  * Unfortunately Gothic 1 does not have the option bShowWeaponTrails, skip the entire function call here
  */
-func void Ninja_Stamina_HideWeaponTrails(var int hide) {
+func void Patch_Stamina_HideWeaponTrails(var int hide) {
     const int oCAniCtrl_Human__ShowWeaponTrail_G1 = 6452016; //0x627330
     const int oCAniCtrl_Human__ShowWeaponTrail_G2 = 7011952; //0x6AFE70
     var int addr; addr = MEMINT_SwitchG1G2(oCAniCtrl_Human__ShowWeaponTrail_G1, oCAniCtrl_Human__ShowWeaponTrail_G2);
@@ -80,7 +80,7 @@ func void Ninja_Stamina_HideWeaponTrails(var int hide) {
 /*
  * Decrease stamina on melee fight actions
  */
-func void Ninja_Stamina_IntegratedStamina() {
+func void Patch_Stamina_IntegratedStamina() {
     var oCAniCtrl_Human ai; ai = _^(ESI);
     var C_Npc slf; slf = _^(ai.npc);
 
@@ -120,17 +120,17 @@ func void Ninja_Stamina_IntegratedStamina() {
     // Determine decrement/cost
     var int decr;
     if (fists) {
-        if      (parade)   {  decr = Ninja_Stamina_FIST_FIRSTHIT; }
-        else if (firstHit) {  decr = Ninja_Stamina_FIST_COMBO;    }
-        else /*followHit*/ {  decr = Ninja_Stamina_FIST_PARADE;   };
+        if      (parade)   {  decr = Patch_Stamina_FIST_FIRSTHIT; }
+        else if (firstHit) {  decr = Patch_Stamina_FIST_COMBO;    }
+        else /*followHit*/ {  decr = Patch_Stamina_FIST_PARADE;   };
     } else if (twoHanded)  {
-        if      (parade)   {  decr = Ninja_Stamina_1H_FIRSTHIT;   }
-        else if (firstHit) {  decr = Ninja_Stamina_1H_COMBO;      }
-        else /*followHit*/ {  decr = Ninja_Stamina_1H_PARADE;     };
+        if      (parade)   {  decr = Patch_Stamina_1H_FIRSTHIT;   }
+        else if (firstHit) {  decr = Patch_Stamina_1H_COMBO;      }
+        else /*followHit*/ {  decr = Patch_Stamina_1H_PARADE;     };
     } else   /*oneHanded*/ {
-        if      (parade)   {  decr = Ninja_Stamina_2H_FIRSTHIT;   }
-        else if (firstHit) {  decr = Ninja_Stamina_2H_COMBO;      }
-        else /*followHit*/ {  decr = Ninja_Stamina_2H_PARADE;     };
+        if      (parade)   {  decr = Patch_Stamina_2H_FIRSTHIT;   }
+        else if (firstHit) {  decr = Patch_Stamina_2H_COMBO;      }
+        else /*followHit*/ {  decr = Patch_Stamina_2H_PARADE;     };
     };
 
     // Decrease breath or disable actions by animation
@@ -138,17 +138,17 @@ func void Ninja_Stamina_IntegratedStamina() {
         // End combo or disable melee
         if (!(ai.bitfield & /*endCombo*/2)) {
             ai.bitfield = ai.bitfield | /*endCombo*/2;
-        } else if (!Ninja_Stamina_Mdl_OverlayMdsIsActive(slf, Ninja_Stamina_DisableMDS)) {
-            Mdl_ApplyOverlayMds(slf, Ninja_Stamina_DisableMDS);
+        } else if (!Patch_Stamina_Mdl_OverlayMdsIsActive(slf, Patch_Stamina_DisableMDS)) {
+            Mdl_ApplyOverlayMds(slf, Patch_Stamina_DisableMDS);
         };
 
         // Temporarily disable all(!) weapon trails
-        Ninja_Stamina_HideWeaponTrails(TRUE);
+        Patch_Stamina_HideWeaponTrails(TRUE);
 
-    } else if (Ninja_Stamina_Mdl_OverlayMdsIsActive(slf, Ninja_Stamina_DisableMDS)) {
+    } else if (Patch_Stamina_Mdl_OverlayMdsIsActive(slf, Patch_Stamina_DisableMDS)) {
         // Back to normal
-        Mdl_RemoveOverlayMds(slf, Ninja_Stamina_DisableMDS);
-        Ninja_Stamina_HideWeaponTrails(FALSE);
+        Mdl_RemoveOverlayMds(slf, Patch_Stamina_DisableMDS);
+        Patch_Stamina_HideWeaponTrails(FALSE);
     };
 };
 
@@ -156,13 +156,13 @@ func void Ninja_Stamina_IntegratedStamina() {
 /*
  * Initialization function to be called from Init_Global
  */
-func void Ninja_Stamina_IntegratedStamina_Init() {
+func void Patch_Stamina_IntegratedStamina_Init() {
     const int oCAniCtrl_Human__StartHitCombo_G1 = 6452587; //0x62756B
     const int oCAniCtrl_Human__StartHitCombo_G2 = 7012555; //0x6B00CB
     const int oCAniCtrl_Human__HitCombo_next_G1 = 6453169; //0x6277B1
     const int oCAniCtrl_Human__HitCombo_next_G2 = 7013146; //0x6B031A
     HookEngineF(MEMINT_SwitchG1G2(oCAniCtrl_Human__StartHitCombo_G1,
-                                  oCAniCtrl_Human__StartHitCombo_G2), 8, Ninja_Stamina_IntegratedStamina);
+                                  oCAniCtrl_Human__StartHitCombo_G2), 8, Patch_Stamina_IntegratedStamina);
     HookEngineF(MEMINT_SwitchG1G2(oCAniCtrl_Human__HitCombo_next_G1,
-                                  oCAniCtrl_Human__HitCombo_next_G2), 8, Ninja_Stamina_IntegratedStamina);
+                                  oCAniCtrl_Human__HitCombo_next_G2), 8, Patch_Stamina_IntegratedStamina);
 };

@@ -2,7 +2,7 @@
  * Create menu item from script instance name
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
-func int Ninja_Stamina_CreateMenuItem(var string scriptName) {
+func int Patch_Stamina_CreateMenuItem(var string scriptName) {
     const int zCMenuItem__Create_G1 = 5052784; //0x4D1970
     const int zCMenuItem__Create_G2 = 5105600; //0x4DE7C0
 
@@ -25,7 +25,7 @@ func int Ninja_Stamina_CreateMenuItem(var string scriptName) {
  * Copy essential properties from one to another menu entry
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
-func void Ninja_Stamina_CopyMenuItemProperties(var int dstPtr, var int srcPtr) {
+func void Patch_Stamina_CopyMenuItemProperties(var int dstPtr, var int srcPtr) {
     if (!dstPtr) || (!srcPtr) {
         return;
     };
@@ -47,7 +47,7 @@ func void Ninja_Stamina_CopyMenuItemProperties(var int dstPtr, var int srcPtr) {
  * Get maximum menu item height
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
-func int Ninja_Stamina_MenuItemGetHeight(var int itmPtr) {
+func int Patch_Stamina_MenuItemGetHeight(var int itmPtr) {
     if (!itmPtr) {
         return 0;
     };
@@ -83,7 +83,7 @@ func int Ninja_Stamina_MenuItemGetHeight(var int itmPtr) {
  * Insert value into array at specific position
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
-func void Ninja_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var int value) {
+func void Patch_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var int value) {
     const int zCArray__InsertAtPos_G1 = 6267728; //0x5FA350
     const int zCArray__InsertAtPos_G2 = 6458144; //0x628B20
 
@@ -105,7 +105,7 @@ func void Ninja_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var i
  *
  * Note: This functions was slightly modified!
  */
-func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
+func void Patch_Stamina_AddKeyMenuEntry(var int menuPtr) {
     MEM_InitAll();
 
     // Get menu and menu item list, corresponds to C_MENU_DEF.items[]
@@ -118,19 +118,19 @@ func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
         // New menu instances (description and key binding)
         var string itm1Str;
         var string itm2Str;
-        var int loc; loc = Ninja_Stamina_GuessLocalization();
+        var int loc; loc = Patch_Stamina_GuessLocalization();
         if (loc == 1) {
-            itm1Str = "MENUITEM_KEY_DE_NINJA_STAMINA";
-            itm2Str = "MENUITEM_INP_DE_NINJA_STAMINA";
+            itm1Str = "MENUITEM_KEY_DE_PATCH_STAMINA";
+            itm2Str = "MENUITEM_INP_DE_PATCH_STAMINA";
         } else if (loc == 2) {
-            itm1Str = "MENUITEM_KEY_PL_NINJA_STAMINA";
-            itm2Str = "MENUITEM_INP_PL_NINJA_STAMINA";
+            itm1Str = "MENUITEM_KEY_PL_PATCH_STAMINA";
+            itm2Str = "MENUITEM_INP_PL_PATCH_STAMINA";
         } else if (loc == 3) {
-            itm1Str = "MENUITEM_KEY_RU_NINJA_STAMINA";
-            itm2Str = "MENUITEM_INP_RU_NINJA_STAMINA";
+            itm1Str = "MENUITEM_KEY_RU_PATCH_STAMINA";
+            itm2Str = "MENUITEM_INP_RU_PATCH_STAMINA";
         } else {
-            itm1Str = "MENUITEM_KEY_EN_NINJA_STAMINA";
-            itm2Str = "MENUITEM_INP_EN_NINJA_STAMINA";
+            itm1Str = "MENUITEM_KEY_EN_PATCH_STAMINA";
+            itm2Str = "MENUITEM_INP_EN_PATCH_STAMINA";
         };
 
         // Get new items
@@ -140,12 +140,12 @@ func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
         // If the new ones do not exist yet, create them the first time
         if (!itm1) {
             var zCMenuItem itm;
-            itm1 = Ninja_Stamina_CreateMenuItem(itm1Str);
-            itm2 = Ninja_Stamina_CreateMenuItem(itm2Str);
+            itm1 = Patch_Stamina_CreateMenuItem(itm1Str);
+            itm2 = Patch_Stamina_CreateMenuItem(itm2Str);
 
             // Copy properties of first key binding entry (left column)
             var int itmF_left; itmF_left = MEM_ArrayRead(items, 1);
-            Ninja_Stamina_CopyMenuItemProperties(itm1, itmF_left);
+            Patch_Stamina_CopyMenuItemProperties(itm1, itmF_left);
             itm = _^(itmF_left);
             var int ypos_l; ypos_l = itm.m_parPosY;
 
@@ -154,9 +154,9 @@ func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
             rightname = STR_SubStr(rightname, 4, STR_Len(rightname)-4);
             var int itmF_right; itmF_right = MEM_GetMenuItemByString(rightname);
             if (itmF_right) {
-                Ninja_Stamina_CopyMenuItemProperties(itm2, itmF_right);
+                Patch_Stamina_CopyMenuItemProperties(itm2, itmF_right);
             } else { // If not found, copy from left column
-                Ninja_Stamina_CopyMenuItemProperties(itm2, itmF_left);
+                Patch_Stamina_CopyMenuItemProperties(itm2, itmF_left);
                 itm = _^(itm2);
                 itm.m_parPosX += 2700; // Default x position
             };
@@ -181,8 +181,8 @@ func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
             itm.m_parPosY = y + (ypos_r - ypos_l); // Maintain possible difference
 
             // Get maximum height of new entries
-            var int ystep; ystep = Ninja_Stamina_MenuItemGetHeight(itm1);
-            var int ystep_r; ystep_r = Ninja_Stamina_MenuItemGetHeight(itm2);
+            var int ystep; ystep = Patch_Stamina_MenuItemGetHeight(itm1);
+            var int ystep_r; ystep_r = Patch_Stamina_MenuItemGetHeight(itm2);
             if (ystep_r > ystep) {
                 ystep = ystep_r;
             };
@@ -195,8 +195,8 @@ func void Ninja_Stamina_AddKeyMenuEntry(var int menuPtr) {
         };
 
         // Add new entries at the correct position
-        Ninja_Stamina_ArrayInsertAtPos(items, index, itm1);
-        Ninja_Stamina_ArrayInsertAtPos(items, index+1, itm2);
+        Patch_Stamina_ArrayInsertAtPos(items, index, itm1);
+        Patch_Stamina_ArrayInsertAtPos(items, index+1, itm2);
     };
 
     /* Modify other menus as well:

@@ -1,14 +1,14 @@
 // English
-INSTANCE MENUITEM_KEY_EN_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_KEY_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     text[0]             	= "Sprint";
     text[1]             	= "Press DEL to remove and ENTER to define a key.";
 
     onSelAction[0]      	= /*SEL_ACTION_EXECCOMMANDS*/ 7;
-    onSelAction_S[0]    	= "RUN MENUITEM_INP_EN_NINJA_STAMINA";
+    onSelAction_S[0]    	= "RUN MENUITEM_INP_EN_PATCH_STAMINA";
 };
 
-INSTANCE MENUITEM_INP_EN_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_INP_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type       	 			= /*MENU_ITEM_INPUT*/ 3;
     text[1]     			= "Press the desired key.";
@@ -20,16 +20,16 @@ INSTANCE MENUITEM_INP_EN_NINJA_STAMINA(C_MENU_ITEM_DEF)
 
 
 // German
-INSTANCE MENUITEM_KEY_DE_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_KEY_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     text[0]             	= "Sprinten";
     text[1]             	= "Taste ENTF zum Lцschen und RETURN zum definieren";
 
     onSelAction[0]      	= /*SEL_ACTION_EXECCOMMANDS*/ 7;
-    onSelAction_S[0]    	= "RUN MENUITEM_INP_DE_NINJA_STAMINA";
+    onSelAction_S[0]    	= "RUN MENUITEM_INP_DE_PATCH_STAMINA";
 };
 
-INSTANCE MENUITEM_INP_DE_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_INP_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type        			= /*MENU_ITEM_INPUT*/ 3;
     text[1]     			= "Gewьnschte Taste betдtigen.";
@@ -41,16 +41,16 @@ INSTANCE MENUITEM_INP_DE_NINJA_STAMINA(C_MENU_ITEM_DEF)
 
 
 // Polish
-INSTANCE MENUITEM_KEY_PL_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_KEY_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     text[0]                 = "Sprint";
     text[1]                 = "DEL - usuwa, ENTER - przypisuje klawisz.";
 
     onSelAction[0]          = /*SEL_ACTION_EXECCOMMANDS*/ 7;
-    onSelAction_S[0]        = "RUN MENUITEM_INP_PL_NINJA_STAMINA";
+    onSelAction_S[0]        = "RUN MENUITEM_INP_PL_PATCH_STAMINA";
 };
 
-INSTANCE MENUITEM_INP_PL_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_INP_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
     text[1]                 = "Naci¶nij ї±dany klawisz.";
@@ -62,16 +62,16 @@ INSTANCE MENUITEM_INP_PL_NINJA_STAMINA(C_MENU_ITEM_DEF)
 
 
 // Russian
-INSTANCE MENUITEM_KEY_RU_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_KEY_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     text[0]                 = "спринт";
     text[1]                 = "нажмите DEL, чтобы очистить слот или ENTER, чтобы переопределить";
 
     onSelAction[0]          = /*SEL_ACTION_EXECCOMMANDS*/ 7;
-    onSelAction_S[0]        = "RUN MENUITEM_INP_RU_NINJA_STAMINA";
+    onSelAction_S[0]        = "RUN MENUITEM_INP_RU_PATCH_STAMINA";
 };
 
-INSTANCE MENUITEM_INP_RU_NINJA_STAMINA(C_MENU_ITEM_DEF)
+INSTANCE MENUITEM_INP_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
     text[1]                 = "Пожалуйста, нажмите клавишу для этого действия.";

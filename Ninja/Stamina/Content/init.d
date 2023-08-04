@@ -14,8 +14,8 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         };
 
         // Check if the script features are already present in the mod
-        Ninja_Stamina_IntegratedSprintExists  = (MEM_FindParserSymbol("IntegratedSprint")  != -1);
-        Ninja_Stamina_IntegratedStaminaExists = (MEM_FindParserSymbol("IntegratedStamina") != -1);
+        Patch_Stamina_IntegratedSprintExists  = (MEM_FindParserSymbol("IntegratedSprint")  != -1);
+        Patch_Stamina_IntegratedStaminaExists = (MEM_FindParserSymbol("IntegratedStamina") != -1);
 
         // Set non-existing values
         MEM_Info("Stamina: Initializing entries in Gothic.ini.");
@@ -32,38 +32,38 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         if (!MEM_GothOptExists("STAMINA", "2hParadeCost"    )) { MEM_SetGothOpt("STAMINA", "2hParadeCost",     "10"); };
 
         // Read values
-        Ninja_Stamina_SPRINTTIME    = STR_ToInt(MEM_GetGothOpt("STAMINA", "sprintTotalSec"  )) * 1000;
-        Ninja_Stamina_FIST_FIRSTHIT = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistFirstHitCost"));
-        Ninja_Stamina_FIST_COMBO    = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistComboCost"   ));
-        Ninja_Stamina_FIST_PARADE   = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistParadeCost"  ));
-        Ninja_Stamina_1H_FIRSTHIT   = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hFirstHitCost"  ));
-        Ninja_Stamina_1H_COMBO      = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hComboCost"     ));
-        Ninja_Stamina_1H_PARADE     = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hParadeCost"    ));
-        Ninja_Stamina_2H_FIRSTHIT   = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hFirstHitCost"  ));
-        Ninja_Stamina_2H_COMBO      = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hComboCost"     ));
-        Ninja_Stamina_2H_PARADE     = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hParadeCost"    ));
+        Patch_Stamina_SPRINTTIME    = STR_ToInt(MEM_GetGothOpt("STAMINA", "sprintTotalSec"  )) * 1000;
+        Patch_Stamina_FIST_FIRSTHIT = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistFirstHitCost"));
+        Patch_Stamina_FIST_COMBO    = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistComboCost"   ));
+        Patch_Stamina_FIST_PARADE   = STR_ToInt(MEM_GetGothOpt("STAMINA", "fistParadeCost"  ));
+        Patch_Stamina_1H_FIRSTHIT   = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hFirstHitCost"  ));
+        Patch_Stamina_1H_COMBO      = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hComboCost"     ));
+        Patch_Stamina_1H_PARADE     = STR_ToInt(MEM_GetGothOpt("STAMINA", "1hParadeCost"    ));
+        Patch_Stamina_2H_FIRSTHIT   = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hFirstHitCost"  ));
+        Patch_Stamina_2H_COMBO      = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hComboCost"     ));
+        Patch_Stamina_2H_PARADE     = STR_ToInt(MEM_GetGothOpt("STAMINA", "2hParadeCost"    ));
         if (!STR_ToInt(MEM_GetGothOpt("STAMINA", "supplySprintAni" ))) {
-            Ninja_Stamina_SprintMDS = "HUMANS_SPRINT.MDS";
+            Patch_Stamina_SprintMDS = "HUMANS_SPRINT.MDS";
         };
 
         // Set integrated sprint keys if desired only
-        if (Ninja_Stamina_SPRINTTIME > 0) && (!Ninja_Stamina_IntegratedSprintExists) {
+        if (Patch_Stamina_SPRINTTIME > 0) && (!Patch_Stamina_IntegratedSprintExists) {
             if (!MEM_GothOptExists("KEYS", "keyIntSprint")) { MEM_SetKeys("keyIntSprint", KEY_V, KEY_PERIOD); };
         };
 
         // Set MDS overlay according to Gothic version
         if (GOTHIC_BASE_VERSION == 1) {
-            Ninja_Stamina_DisableMDS = Ninja_Stamina_DisableMDS_G1;
+            Patch_Stamina_DisableMDS = Patch_Stamina_DisableMDS_G1;
         } else {
-            Ninja_Stamina_DisableMDS = Ninja_Stamina_DisableMDS_G2;
+            Patch_Stamina_DisableMDS = Patch_Stamina_DisableMDS_G2;
         };
 
         once = 1;
     };
 
     // Add key menu entry if the desired only
-    if (Ninja_Stamina_SPRINTTIME > 0) && (!Ninja_Stamina_IntegratedSprintExists) {
-        Ninja_Stamina_AddKeyMenuEntry(menuPtr);
+    if (Patch_Stamina_SPRINTTIME > 0) && (!Patch_Stamina_IntegratedSprintExists) {
+        Patch_Stamina_AddKeyMenuEntry(menuPtr);
     };
 };
 
@@ -76,24 +76,24 @@ func void Ninja_Stamina_Init() {
     MEM_InitAll();
 
     // Integrate sprint if desired only. And only if not already present in the mod
-    if (Ninja_Stamina_SPRINTTIME > 0) && (!Ninja_Stamina_IntegratedSprintExists) {
+    if (Patch_Stamina_SPRINTTIME > 0) && (!Patch_Stamina_IntegratedSprintExists) {
         // Wrapper for "LeGo_Init" to ensure correct LeGo initialization without breaking the mod
         LeGo_MergeFlags(LeGo_FrameFunctions);
-        Ninja_Stamina_IntegratedSprint_Init();
+        Patch_Stamina_IntegratedSprint_Init();
     };
 
     // Integrate fight stamina if desired only. And only if not already present in the mod
-    if (!Ninja_Stamina_IntegratedStaminaExists) {
-        if (Ninja_Stamina_FIST_FIRSTHIT) || (Ninja_Stamina_FIST_COMBO) || (Ninja_Stamina_FIST_PARADE)
-        || (Ninja_Stamina_2H_FIRSTHIT)   || (Ninja_Stamina_2H_COMBO)   || (Ninja_Stamina_2H_PARADE)
-        || (Ninja_Stamina_1H_FIRSTHIT)   || (Ninja_Stamina_1H_COMBO)   || (Ninja_Stamina_1H_PARADE) {
-            Ninja_Stamina_IntegratedStamina_Init();
+    if (!Patch_Stamina_IntegratedStaminaExists) {
+        if (Patch_Stamina_FIST_FIRSTHIT) || (Patch_Stamina_FIST_COMBO) || (Patch_Stamina_FIST_PARADE)
+        || (Patch_Stamina_2H_FIRSTHIT)   || (Patch_Stamina_2H_COMBO)   || (Patch_Stamina_2H_PARADE)
+        || (Patch_Stamina_1H_FIRSTHIT)   || (Patch_Stamina_1H_COMBO)   || (Patch_Stamina_1H_PARADE) {
+            Patch_Stamina_IntegratedStamina_Init();
         };
     };
 
     // Initialize breath scripts only if either of the above is active
-    if  (!Ninja_Stamina_IntegratedStaminaExists)
-    || ((!Ninja_Stamina_IntegratedSprintExists) && (Ninja_Stamina_SPRINTTIME > 0)) {
+    if  (!Patch_Stamina_IntegratedStaminaExists)
+    || ((!Patch_Stamina_IntegratedSprintExists) && (Patch_Stamina_SPRINTTIME > 0)) {
         Breath_Init();
     };
 };
