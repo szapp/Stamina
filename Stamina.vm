@@ -22,6 +22,7 @@ Ninja\Stamina\* -r
 
 [EXCLUDE]
 _work\Data\Scripts\* -r
+empty -r
 *.vm
 *.vdf
 *.bat

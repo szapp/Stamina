@@ -52,7 +52,7 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         };
 
         // Set MDS overlay according to Gothic version
-        if (GOTHIC_BASE_VERSION == 1) {
+        if (GOTHIC_BASE_VERSION == 1) || (GOTHIC_BASE_VERSION == 112) {
             Patch_Stamina_DisableMDS = Patch_Stamina_DisableMDS_G1;
         } else {
             Patch_Stamina_DisableMDS = Patch_Stamina_DisableMDS_G2;

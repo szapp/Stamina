@@ -5,7 +5,7 @@
  * Collection of functions that expose the swim bar for generalized use (e.g. stamina, breath).
  *
  * - Requires Ikarus 1.2.2
- * - Compatible with Gothic 1 and Gothic 2
+ * - Compatible with Gothic, Gothic Sequel, Gothic 2, and Gothic 2 NotR
  *
  * Instructions
  * - Initialize from Init_Global with these two lines
@@ -260,43 +260,45 @@ func void Breath_SetRegeneration(var int ms) {
  * Change the visibility of the swim bar
  */
 func void Breath_SetBarVisible(var int always) {
-    const int oCGame__UpdatePlayerStatus_swimBarJmp1_G1 = 6525142; //0x6390D6
-    const int oCGame__UpdatePlayerStatus_swimBarJmp1_G2 = 7090988; //0x6C332C
-    const int oCGame__UpdatePlayerStatus_swimBarJmp2_G1 = 6525154; //0x6390E2
-    const int oCGame__UpdatePlayerStatus_swimBarJmp2_G2 = 7091000; //0x6C3338
-    var int addr1; var int addr2;
-    addr1 = MEMINT_SwitchG1G2(oCGame__UpdatePlayerStatus_swimBarJmp1_G1, oCGame__UpdatePlayerStatus_swimBarJmp1_G2);
-    addr2 = MEMINT_SwitchG1G2(oCGame__UpdatePlayerStatus_swimBarJmp2_G1, oCGame__UpdatePlayerStatus_swimBarJmp2_G2);
+    const int oCGame__UpdatePlayerStatus_swmBarJmp1[4] = {/*G1*/6525142, /*G1A*/6682308, /*G2*/6711340, /*G2A*/7090988};
+    const int oCGame__UpdatePlayerStatus_swmBarJmp2[4] = {/*G1*/6525154, /*G1A*/6682320, /*G2*/6711352, /*G2A*/7091000};
+    const int oCNpc_divetime_offset[4]                 = {/*G1*/2064,    /*G1A*/2068,    /*G2*/1860,    /*G2A*/2000};
+    const int oCNpc_divectr_offset[4]                  = {/*G1*/2068,    /*G1A*/2072,    /*G2*/1864,    /*G2A*/2004};
+
+    // Shorthand
+    const int addr_1 = oCGame__UpdatePlayerStatus_swmBarJmp1[IDX_EXE];
+    const int addr_2 = oCGame__UpdatePlayerStatus_swmBarJmp2[IDX_EXE];
 
     const int once = 0;
     if (!once) {
-        MemoryProtectionOverride(addr1,  2);
-        MemoryProtectionOverride(addr2, 14);
+        MemoryProtectionOverride(addr_1,  2);
+        MemoryProtectionOverride(addr_2, 14);
         once = 1;
     };
 
     if (always) {
         // Overwrite first conditional jump to unconditional jump
-        if (MEM_ReadByte( addr1) ==  /*0F*/ 15) {
-            MEM_WriteByte(addr1,     /*EB*/235);                     // jmp
-            MEM_WriteByte(addr1+1,   /*1C*/ 28);                     // 0x28
+        if (MEM_ReadByte( addr_1) == /*0F*/ 15) {
+            MEM_WriteByte(addr_1,    /*EB*/235);                      // jmp
+            MEM_WriteByte(addr_1+1,  /*1C*/ 28);                      // 0x28
         };
     } else {
         // Revert the above change
-        if (MEM_ReadInt(  addr1) ==  /*EB 1C A4 00*/10755307) {      // Compare 4 bytes, because of third-party changes
-            MEM_WriteByte(addr1,     /*0F*/ 15);                     // jz
-            MEM_WriteByte(addr1+1,   /*84*/132);
+        const int instr[4] = {/*EB 1C A4 00*/10755307, /*EB 1C A1 00*/10558699, 10755307, 10755307};
+        if (MEM_ReadInt(  addr_1) == instr[IDX_EXE]) {                // Compare 4 bytes, because of third-party changes
+            MEM_WriteByte(addr_1,    /*0F*/ 15);                      // jz
+            MEM_WriteByte(addr_1+1,  /*84*/132);
         };
         // Overwrite second condition to be true if breath is non-full
-        if (MEM_ReadByte( addr2) ==  /*E8*/232) {
-            MEM_WriteByte(addr2,     /*8B*/139);                     // mov
-            MEM_WriteByte(addr2+1,   /*81*/129);                     // eax,
-            MEM_WriteInt( addr2+2,   MEMINT_SwitchG1G2(2064, 2000)); // [offset oCNpc.divetime]
-            MEM_WriteByte(addr2+6,   /*3B*/ 59);                     // cmp
-            MEM_WriteByte(addr2+7,   /*81*/129);                     // eax,
-            MEM_WriteInt( addr2+8,   MEMINT_SwitchG1G2(2068, 2004)); // [offset oCNpc.divectr]
-            MEM_WriteByte(addr2+12,  /*0F*/ 15);                     // jz
-            MEM_WriteByte(addr2+13,  /*84*/132);
+        if (MEM_ReadByte( addr_2) == /*E8*/232) {
+            MEM_WriteByte(addr_2,    /*8B*/139);                      // mov
+            MEM_WriteByte(addr_2+1,  /*81*/129);                      // eax,
+            MEM_WriteInt( addr_2+2,  oCNpc_divetime_offset[IDX_EXE]); // [offset oCNpc.divetime]
+            MEM_WriteByte(addr_2+6,  /*3B*/ 59);                      // cmp
+            MEM_WriteByte(addr_2+7,  /*81*/129);                      // eax,
+            MEM_WriteInt( addr_2+8,  oCNpc_divectr_offset[IDX_EXE]);  // [offset oCNpc.divectr]
+            MEM_WriteByte(addr_2+12, /*0F*/ 15);                      // jz
+            MEM_WriteByte(addr_2+13, /*84*/132);
         };
     };
 };
@@ -340,17 +342,16 @@ func void _Breath_RegenHook() {
  * Modify the breath regeneration
  *
 func void Breath_Init_slow() {
-    const int oCNpc_Process_diveRegen_G1 = 6926517; //0x69B0B5
-    const int oCNpc_Process_diveRegen_G2 = 7595752; //0x73E6E8
-    var int address; address = MEMINT_SwitchG1G2(oCNpc_Process_diveRegen_G1, oCNpc_Process_diveRegen_G2);
+    const int oCNpc__Process_diveRegen[4] = {/*G1* 6926517, /*G1A* 7131257, /*G2* 7208440, /*G2A*7595752};
+    const int addr = oCNpc__Process_diveRegen[IDX_EXE]; // Shorthand
 
     // Only perform changes if bytes are not already modified
-    if (MEM_ReadInt(address + 2) == _@(MEM_Timer.frameTimeFloat)) {
+    if (MEM_ReadInt(addr + 2) == _@(MEM_Timer.frameTimeFloat)) {
         const int ASMINT_OP_floatLoadFromEAX = 217; //0x00D9
-        MemoryProtectionOverride(address, 8);
-        MEM_WriteInt(address,     ASMINT_OP_nop + (ASMINT_OP_nop<<8) + (ASMINT_OP_nop<<16) + (ASMINT_OP_nop<<24));
-        MEM_WriteInt(address + 4, ASMINT_OP_nop + (ASMINT_OP_nop<<8) + (ASMINT_OP_floatLoadFromEAX<<16));
-        HookEngineF(address, 5, _Breath_RegenHook);
+        MemoryProtectionOverride(addr, 8);
+        MEM_WriteInt(addr,     ASMINT_OP_nop + (ASMINT_OP_nop<<8) + (ASMINT_OP_nop<<16) + (ASMINT_OP_nop<<24));
+        MEM_WriteInt(addr + 4, ASMINT_OP_nop + (ASMINT_OP_nop<<8) + (ASMINT_OP_floatLoadFromEAX<<16));
+        HookEngineF(addr, 5, _Breath_RegenHook);
     };
 
     // Reset regenerate list
@@ -385,47 +386,45 @@ func void Breath_Init_slow() {
  * Written in assembly for performance, because it is executed every frame for all NPC with non-full breath
  */
 func void Breath_Init() {
-    const int oCNpc_Process_diveRegen_G1 = 6926517; //0x69B0B5
-    const int oCNpc_Process_diveRegen_G2 = 7595752; //0x73E6E8
-    var int address; address = MEMINT_SwitchG1G2(oCNpc_Process_diveRegen_G1, oCNpc_Process_diveRegen_G2);
+    // Trailing underscores for backward compatibility (before, these were one-element integer variables)
+    const int zCArray_zCVob__IsInList_[4] = {/*G1*/6590128, /*G1A*/6753216, /*G2*/6778944, /*G2A*/ 7159168};
+    const int zCArray_zCVob__Remove_[4]   = {/*G1*/6590048, /*G1A*/6753152, /*G2*/6778864, /*G2A*/ 7159088};
+    const int oCNpc__Process_diveRegen[4] = {/*G1*/6926517, /*G1A*/7131257, /*G2*/7208440, /*G2A*/ 7595752};
+    const int oCNpc_player_[4]            = {/*G1*/9288624, /*G1A*/9580852, /*G2*/9974236, /*G2A*/11216516};
+    const int oCNpc_divectr_offset_[4]    = {/*G1*/2068,    /*G1A*/2072,    /*G2*/1864,    /*G2A*/2004};
+
+    // Shorthand
+    const int addr = oCNpc__Process_diveRegen[IDX_EXE];
+
+    // Assembly instructions
+    const int ASMINT_OP_pushESI          =    86; //0x56
+    const int ASMINT_OP_jzShort          =   116; //0x74
+    const int ASMINT_OP_jnzShort         =   117; //0x75
+    // 2 bytes
+    const int ASMINT_OP_testECXtoECX     = 51589; //0xC985
+    const int ASMINT_OP_testEAXtoEAX     = 49285; //0xC085
+    const int ASMINT_OP_floatLoadFromMem =  1497; //0x05D9
+    const int ASMINT_OP_subSTfromST      = 57560; //0xE0D8
+    const int ASMINT_OP_mulST0byST1pop   = 51678; //0xC9DE
+    const int ASMINT_OP_cmpESItoMem      = 13627; //0x353B
+    const int ASMINT_OP_movECXtoMem      =  3465; //0x0D89
+    const int ASMINT_OP_movESIplusToECX  = 36491; //0x8E8B
+
     var int _Breath_player;
 
     // Only perform the following changes if the bytes are not already modified
-    if (MEM_ReadInt(address + 2) == _@(MEM_Timer.frameTimeFloat)) {
-
-        // Assembly instructions
-        const int ASMINT_OP_pushESI          =    86; //0x56
-        const int ASMINT_OP_jzShort          =   116; //0x74
-        const int ASMINT_OP_jnzShort         =   117; //0x75
-        // 2 bytes
-        const int ASMINT_OP_testECXtoECX     = 51589; //0xC985
-        const int ASMINT_OP_testEAXtoEAX     = 49285; //0xC085
-        const int ASMINT_OP_floatLoadFromMem =  1497; //0x05D9
-        const int ASMINT_OP_subSTfromST      = 57560; //0xE0D8
-        const int ASMINT_OP_mulST0byST1pop   = 51678; //0xC9DE
-        const int ASMINT_OP_cmpESItoMem      = 13627; //0x353B
-        const int ASMINT_OP_movECXtoMem      =  3465; //0x0D89
-        const int ASMINT_OP_movESIplusToECX  = 36491; //0x8E8B
+    if (MEM_ReadInt(addr + 2) == _@(MEM_Timer.frameTimeFloat)) {
 
         // Re-write regeneration (assembly for performance: called every frame for all NPC!)
-        var int oCNpc_divectr_offset;
-        var int oCNpc_player;
-        var int zCArray_zCVob__IsInList;
-        var int zCArray_zCVob__Remove;
-        oCNpc_divectr_offset    = MEMINT_SwitchG1G2(2068, 2004);
-        oCNpc_player            = MEMINT_SwitchG1G2(/*0x8DBBB0*/9288624, /*0xAB2684*/11216516);
-        zCArray_zCVob__IsInList = MEMINT_SwitchG1G2(/*0x648EB0*/6590128, /*0x6D3D80*/ 7159168);
-        zCArray_zCVob__Remove   = MEMINT_SwitchG1G2(/*0x648E60*/6590048, /*0x6D3D30*/ 7159088);
-
         ASM_Open(83);
-        MemoryProtectionOverride(address, 8);
-        MEM_WriteByte(address,     ASMINT_OP_jmp);
-        MEM_WriteInt (address + 1, ASM_Here() - address - 5);
+        MemoryProtectionOverride(addr, 8);
+        MEM_WriteByte(addr,     ASMINT_OP_jmp);
+        MEM_WriteInt (addr + 1, ASM_Here() - addr - 5);
 
         // Save breath value of player
-        ASM_2(ASMINT_OP_cmpESItoMem);      ASM_4(oCNpc_player);
+        ASM_2(ASMINT_OP_cmpESItoMem);      ASM_4(oCNpc_player_[IDX_EXE]);
         ASM_1(ASMINT_OP_jnzShort);         ASM_1(12);
-        ASM_2(ASMINT_OP_movESIplusToECX);  ASM_4(oCNpc_divectr_offset);
+        ASM_2(ASMINT_OP_movESIplusToECX);  ASM_4(oCNpc_divectr_offset_[IDX_EXE]);
         ASM_2(ASMINT_OP_movECXtoMem);      ASM_4(_@(_Breath_player));
 
         // Load regeneration factors
@@ -441,7 +440,7 @@ func void Breath_Init() {
         ASM_1(ASMINT_OP_pushESI);
         ASM_2(ASMINT_OP_movESPtoEAX);
         ASM_1(ASMINT_OP_pushEAX);
-        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__IsInList - (ASM_Here()+4));
+        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__IsInList_[IDX_EXE] - (ASM_Here()+4));
         ASM_1(ASMINT_OP_popECX);
         ASM_2(ASMINT_OP_testEAXtoEAX);
         ASM_1(ASMINT_OP_jzShort);          ASM_1(18);
@@ -452,12 +451,12 @@ func void Breath_Init() {
         ASM_2(ASMINT_OP_movESPtoEAX);
         ASM_1(ASMINT_OP_pushEAX);
         ASM_2(ASMINT_OP_movMemToECX);      ASM_4(_@(_Breath_DontRegen));
-        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__Remove - (ASM_Here()+4));
+        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__Remove_[IDX_EXE] - (ASM_Here()+4));
         ASM_1(ASMINT_OP_popECX);
 
         // Multiply regeneration factors
         ASM_2(ASMINT_OP_mulST0byST1pop);
-        ASM_1(ASMINT_OP_pushIm);           ASM_4(address+8);
+        ASM_1(ASMINT_OP_pushIm);           ASM_4(addr+8);
         ASM_1(ASMINT_OP_retn);
         var int i; i = ASM_Close();
     };

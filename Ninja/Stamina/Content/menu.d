@@ -3,20 +3,19 @@
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
 func int Patch_Stamina_CreateMenuItem(var string scriptName) {
-    const int zCMenuItem__Create_G1 = 5052784; //0x4D1970
-    const int zCMenuItem__Create_G2 = 5105600; //0x4DE7C0
+    const int zCMenuItem__Create[4] = {/*G1*/5052784, /*G1A*/5120352, /*G2*/5094928, /*G2A*/5105600};
 
-    var int strPtr; strPtr = _@s(scriptName);
-
-    const int call = 0;
     if (CALL_Begin(call)) {
+        const int call = 0;
+        const int ret  = 0;
+        const int strPtr = 0;
+        strPtr = _@s(scriptName);
         CALL_PtrParam(_@(strPtr));
         CALL_PutRetValTo(_@(ret));
-        CALL__cdecl(MEMINT_SwitchG1G2(zCMenuItem__Create_G1, zCMenuItem__Create_G2));
+        CALL__cdecl(zCMenuItem__Create[IDX_EXE]);
         call = CALL_End();
     };
 
-    var int ret;
     return +ret;
 };
 
@@ -55,21 +54,21 @@ func int Patch_Stamina_MenuItemGetHeight(var int itmPtr) {
     var zCMenuItem itm; itm = _^(itmPtr);
     var int fontPtr; fontPtr = itm.m_pFont;
 
-    const int zCFont__GetFontY_G1 = 7209472; //0x6E0200
-    const int zCFont__GetFontY_G2 = 7902432; //0x7894E0
+    const int zCFont__GetFontY[4] = {/*G1*/7209472, /*G1A*/7440400, /*G2*/7510688, /*G2A*/7902432};
 
     var int fontHeight;
-    const int call = 0;
     if (CALL_Begin(call)) {
+        const int call = 0;
         CALL_PutRetValTo(_@(fontHeight));
-        CALL__thiscall(_@(fontPtr), MEMINT_SwitchG1G2(zCFont__GetFontY_G1, zCFont__GetFontY_G2));
+        CALL__thiscall(_@(fontPtr), zCFont__GetFontY[IDX_EXE]);
         call = CALL_End();
     };
 
     // Transform to virtual pixels
     MEM_InitGlobalInst();
+    const int VMAX = 8192;
     var zCView screen; screen = _^(MEM_Game._zCSession_viewport);
-    fontHeight *= 8192 / screen.psizey;
+    fontHeight *= VMAX / screen.psizey;
 
     if (fontHeight > itm.m_parDimY) {
         return fontHeight;
@@ -84,16 +83,15 @@ func int Patch_Stamina_MenuItemGetHeight(var int itmPtr) {
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  */
 func void Patch_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var int value) {
-    const int zCArray__InsertAtPos_G1 = 6267728; //0x5FA350
-    const int zCArray__InsertAtPos_G2 = 6458144; //0x628B20
+    const int zCArray__InsertAtPos[4] = {/*G1*/6267728, /*G1A*/6404400, /*G2*/6427552, /*G2A*/6458144};
 
-    var int valuePtr; valuePtr = _@(value);
-
-    const int call = 0;
     if (CALL_Begin(call)) {
+        const int call = 0;
+        const int valuePtr = 0;
+        valuePtr = _@(value);
         CALL_IntParam(_@(pos));
         CALL_PtrParam(_@(valuePtr));
-        CALL__thiscall(_@(zCArray_ptr), MEMINT_SwitchG1G2(zCArray__InsertAtPos_G1, zCArray__InsertAtPos_G2));
+        CALL__thiscall(_@(zCArray_ptr), zCArray__InsertAtPos[IDX_EXE]);
         call = CALL_End();
     };
 };

@@ -5,7 +5,7 @@
  * Add stamina regulation to melee fighting integrated into the internal breath (diving) system
  *
  * - Requires Ikarus 1.2.2, LeGo (HookEngine), breath.d
- * - Compatible with Gothic 1 and Gothic 2
+ * - Compatible with Gothic, Gothic Sequel, Gothic 2, and Gothic 2 NotR
  *
  * Instructions
  * - Initialize from Init_Global with
@@ -61,18 +61,21 @@ func int Patch_Stamina_Mdl_OverlayMdsIsActive(var C_Npc slf, var string mdsName)
  * Unfortunately Gothic 1 does not have the option bShowWeaponTrails, skip the entire function call here
  */
 func void Patch_Stamina_HideWeaponTrails(var int hide) {
-    const int oCAniCtrl_Human__ShowWeaponTrail_G1 = 6452016; //0x627330
-    const int oCAniCtrl_Human__ShowWeaponTrail_G2 = 7011952; //0x6AFE70
-    var int addr; addr = MEMINT_SwitchG1G2(oCAniCtrl_Human__ShowWeaponTrail_G1, oCAniCtrl_Human__ShowWeaponTrail_G2);
-    var int byte; byte = MEM_ReadByte(addr);
+    const int oCAniCtrl_Human__ShowWeaponTrail[4] = {/*G1*/6452016, /*G1A*/6603616, /*G2*/6632944, /*G2A*/7011952};
+    var int byte; byte = MEM_ReadByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE]);
+
+    const int once = 0;
+    if (!once) {
+        MemoryProtectionOverride(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], 1);
+        once = 1;
+    };
 
     if (hide) {
-        if (byte == /*64*/100) {
-            MemoryProtectionOverride(addr, 1);
-            MEM_WriteByte(addr, /*C3*/195);
+        if (byte == /*0x64*/100) {
+            MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], ASMINT_OP_retn);
         };
-    } else if (byte == /*C3*/195) {
-        MEM_WriteByte(addr, /*64*/100);
+    } else if (byte == ASMINT_OP_retn) {
+        MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], /*0x64*/100);
     };
 };
 
@@ -103,12 +106,10 @@ func void Patch_Stamina_IntegratedStamina() {
             parade = TRUE;
 
             // Return if already running (only the case for long jump back parades)
-            const int oCAniCtrl_Human__IsParadeRunning_G1 = 6456432; //0x628470
-            const int oCAniCtrl_Human__IsParadeRunning_G2 = 7017808; //0x6B1550
-            const int call = 0;
+            const int oCAniCtrl_Human__IsParadeRunning[4] = {/*G1*/6456432, /*G1A*/6608240, /*G2*/6638528, /*G2A*/7017808};
             if (CALL_Begin(call)) {
-                CALL__thiscall(_@(ESI), MEMINT_SwitchG1G2(oCAniCtrl_Human__IsParadeRunning_G1,
-                                                          oCAniCtrl_Human__IsParadeRunning_G2));
+                const int call = 0;
+                CALL__thiscall(_@(ESI), oCAniCtrl_Human__IsParadeRunning[IDX_EXE]);
                 call = CALL_End();
             };
             if (CALL_RetValAsInt()) {
@@ -145,9 +146,12 @@ func void Patch_Stamina_IntegratedStamina() {
         // Temporarily disable all(!) weapon trails
         Patch_Stamina_HideWeaponTrails(TRUE);
 
-    } else if (Patch_Stamina_Mdl_OverlayMdsIsActive(slf, Patch_Stamina_DisableMDS)) {
+    } else {
         // Back to normal
-        Mdl_RemoveOverlayMds(slf, Patch_Stamina_DisableMDS);
+        if (Patch_Stamina_Mdl_OverlayMdsIsActive(slf, Patch_Stamina_DisableMDS)) {
+            Mdl_RemoveOverlayMds(slf, Patch_Stamina_DisableMDS);
+        };
+
         Patch_Stamina_HideWeaponTrails(FALSE);
     };
 };
@@ -157,12 +161,8 @@ func void Patch_Stamina_IntegratedStamina() {
  * Initialization function to be called from Init_Global
  */
 func void Patch_Stamina_IntegratedStamina_Init() {
-    const int oCAniCtrl_Human__StartHitCombo_G1 = 6452587; //0x62756B
-    const int oCAniCtrl_Human__StartHitCombo_G2 = 7012555; //0x6B00CB
-    const int oCAniCtrl_Human__HitCombo_next_G1 = 6453169; //0x6277B1
-    const int oCAniCtrl_Human__HitCombo_next_G2 = 7013146; //0x6B031A
-    HookEngineF(MEMINT_SwitchG1G2(oCAniCtrl_Human__StartHitCombo_G1,
-                                  oCAniCtrl_Human__StartHitCombo_G2), 8, Patch_Stamina_IntegratedStamina);
-    HookEngineF(MEMINT_SwitchG1G2(oCAniCtrl_Human__HitCombo_next_G1,
-                                  oCAniCtrl_Human__HitCombo_next_G2), 8, Patch_Stamina_IntegratedStamina);
+    const int oCAniCtrl_Human__StartHitCombo[4] = {/*G1*/6452587, /*G1A*/6604267, /*G2*/6633499, /*G2A*/7012555};
+    const int oCAniCtrl_Human__HitCombo_next[4] = {/*G1*/6453169, /*G1A*/6604849, /*G2*/6634093, /*G2A*/7013146};
+    HookEngineF(oCAniCtrl_Human__StartHitCombo[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
+    HookEngineF(oCAniCtrl_Human__HitCombo_next[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
 };

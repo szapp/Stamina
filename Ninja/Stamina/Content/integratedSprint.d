@@ -5,7 +5,7 @@
  * Add sprint integrated into the internal breath (diving) system
  *
  * - Requires Ikarus 1.2.2, LeGo 2.6.0 (FrameFunctions), breath.d
- * - Compatible with Gothic 1 and Gothic 2
+ * - Compatible with Gothic, Gothic Sequel, Gothic 2, and Gothic 2 NotR
  *
  * Instructions
  * - Initialize from Init_Global with
@@ -44,17 +44,17 @@ func int Patch_Stamina_Npc_IsRunning(var C_Npc slf) {
     var oCNpc npc; npc = Hlp_GetNpc(slf);
     var int aiPtr; aiPtr = npc.human_ai;
 
-    if (GOTHIC_BASE_VERSION == 2) {
-        const int oCAniCtrl_Human__IsRunning = 7004672; //0x6AE200
+    if (GOTHIC_BASE_VERSION == 130) || (GOTHIC_BASE_VERSION == 2) {
+        const int oCAniCtrl_Human__IsRunning[4] = {0, 0, /*G2*/6625664, /*G2A*/7004672};
 
-        const int call = 0;
         if (CALL_Begin(call)) {
+            const int call = 0;
+            const int ret = 0;
             CALL_PutRetValTo(_@(ret));
-            CALL__thiscall(_@(aiPtr), oCAniCtrl_Human__IsRunning);
+            CALL__thiscall(_@(aiPtr), oCAniCtrl_Human__IsRunning[IDX_EXE]);
             call = CALL_End();
         };
 
-        var int ret;
         return +ret;
 
     } else {
@@ -97,8 +97,7 @@ func int Patch_Stamina_Npc_IsRunning(var C_Npc slf) {
 func void Patch_Stamina_IntegratedSprint() {
     const int THRESHOLD_MS             = 1161527296; // 3000.0f
     const int ACTION_WATERWALK         = 4;          // oCAniCtrl_Human.actionMode
-    const int oCNpc__SetWeaponMode2_G1 = 6904416;    //0x695A60
-    const int oCNpc__SetWeaponMode2_G2 = 7573120;    //0x738E80
+    const int oCNpc__SetWeaponMode2[4] = {/*G1*/6904416, /*G1A*/7107152, /*G2*/7185696, /*G2A*/7573120};
 
     var oCNpc her; her = Hlp_GetNpc(hero);
     var oCAniCtrl_Human ai; ai = _^(her.human_ai);
@@ -130,13 +129,12 @@ func void Patch_Stamina_IntegratedSprint() {
             if (Npc_HasReadiedRangedWeapon(hero)) {
                 var int herPtr; herPtr = _@(her);
                 var int fmode; fmode = her.fmode;
-                var int zero;
-                const int call = 0;
                 if (CALL_Begin(call)) {
-                    CALL_IntParam(_@(zero));
-                    CALL__thiscall(_@(herPtr), MEMINT_SwitchG1G2(oCNpc__SetWeaponMode2_G1, oCNpc__SetWeaponMode2_G2));
+                    const int call = 0;
+                    CALL_IntParam(_@(FALSE));
+                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[IDX_EXE]);
                     CALL_IntParam(_@(fmode));
-                    CALL__thiscall(_@(herPtr), MEMINT_SwitchG1G2(oCNpc__SetWeaponMode2_G1, oCNpc__SetWeaponMode2_G2));
+                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[IDX_EXE]);
                     call = CALL_End();
                 };
             };
