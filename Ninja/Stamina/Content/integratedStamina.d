@@ -96,8 +96,9 @@ func void Patch_Stamina_IntegratedStamina() {
     var oCNpc npc; npc = _^(ai.npc);
     var int fists; fists = (npc.fmode == FMODE_FIST);
     var int twoHanded; twoHanded = (npc.fmode == 4);
-    var int start; start = ((ai.bitfield & /*endCombo*/2) != 0);
+    var int start; start = (ai.bitfield & /*endCombo*/2) || (Patch_Stamina_IntegratedStaminaLoad);
     var int firstHit; firstHit = (start) && (truncf(ai.lastHitAniFrame) < 6); // Tolerance for non-combo animations
+    Patch_Stamina_IntegratedStaminaLoad = FALSE; // First action after loading
     var int parade; parade = FALSE;
     if (start) {
         ai.hitAniID = EAX;
@@ -165,4 +166,5 @@ func void Patch_Stamina_IntegratedStamina_Init() {
     const int oCAniCtrl_Human__HitCombo_next[4] = {/*G1*/6453169, /*G1A*/6604849, /*G2*/6634093, /*G2A*/7013146};
     HookEngineF(oCAniCtrl_Human__StartHitCombo[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
     HookEngineF(oCAniCtrl_Human__HitCombo_next[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
+    Patch_Stamina_IntegratedStaminaLoad = TRUE; // First action after loading
 };

@@ -16,3 +16,4 @@ const string Patch_Stamina_DisableMDS    = "";
 
 const int    Patch_Stamina_IntegratedSprintExists  = 0;
 const int    Patch_Stamina_IntegratedStaminaExists = 0;
+const int    Patch_Stamina_IntegratedStaminaLoad   = 1;
