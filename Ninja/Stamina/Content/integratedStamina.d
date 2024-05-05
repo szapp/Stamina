@@ -84,6 +84,8 @@ func void Patch_Stamina_HideWeaponTrails(var int hide) {
  * Decrease stamina on melee fight actions
  */
 func void Patch_Stamina_IntegratedStamina() {
+    const int FMODE_FIST = 1;
+
     var oCAniCtrl_Human ai; ai = _^(ESI);
     var C_Npc slf; slf = _^(ai.npc);
 
