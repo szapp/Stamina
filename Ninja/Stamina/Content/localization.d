@@ -11,7 +11,7 @@ func int Patch_Stamina_GuessLocalization() {
             return 1;
         } else if (Hlp_StrCmp(panName, "Patelnia")) { // PL
             return 2;
-        } else if (Hlp_StrCmp(panName, "Сковорода")) { // RU
+        } else if (Hlp_StrCmp(panName, "Г‘ГЄГ®ГўГ®Г°Г®Г¤Г ")) { // RU
             return 3;
         };
     };

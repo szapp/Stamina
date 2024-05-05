@@ -23,7 +23,7 @@ INSTANCE MENUITEM_INP_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
 INSTANCE MENUITEM_KEY_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     text[0]             	= "Sprinten";
-    text[1]             	= "Taste ENTF zum Lцschen und RETURN zum definieren";
+    text[1]             	= "Taste ENTF zum LГ¶schen und RETURN zum definieren";
 
     onSelAction[0]      	= /*SEL_ACTION_EXECCOMMANDS*/ 7;
     onSelAction_S[0]    	= "RUN MENUITEM_INP_DE_PATCH_STAMINA";
@@ -32,7 +32,7 @@ INSTANCE MENUITEM_KEY_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 INSTANCE MENUITEM_INP_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type        			= /*MENU_ITEM_INPUT*/ 3;
-    text[1]     			= "Gewьnschte Taste betдtigen.";
+    text[1]     			= "GewГјnschte Taste betГ¤tigen.";
 
     onChgSetOption          = "keyIntSprint";
     onChgSetOptionSection   = "KEYS";
@@ -53,7 +53,7 @@ INSTANCE MENUITEM_KEY_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 INSTANCE MENUITEM_INP_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
-    text[1]                 = "Naci¶nij ї±dany klawisz.";
+    text[1]                 = "NaciВ¶nij ВїВ±dany klawisz.";
 
     onChgSetOption          = "keyIntSprint";
     onChgSetOptionSection   = "KEYS";
@@ -64,8 +64,8 @@ INSTANCE MENUITEM_INP_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 // Russian
 INSTANCE MENUITEM_KEY_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
-    text[0]                 = "спринт";
-    text[1]                 = "нажмите DEL, чтобы очистить слот или ENTER, чтобы переопределить";
+    text[0]                 = "Г±ГЇГ°ГЁГ­ГІ";
+    text[1]                 = "Г­Г Г¦Г¬ГЁГІГҐ DEL, Г·ГІГ®ГЎГ» Г®Г·ГЁГ±ГІГЁГІГј Г±Г«Г®ГІ ГЁГ«ГЁ ENTER, Г·ГІГ®ГЎГ» ГЇГҐГ°ГҐГ®ГЇГ°ГҐГ¤ГҐГ«ГЁГІГј";
 
     onSelAction[0]          = /*SEL_ACTION_EXECCOMMANDS*/ 7;
     onSelAction_S[0]        = "RUN MENUITEM_INP_RU_PATCH_STAMINA";
@@ -74,7 +74,7 @@ INSTANCE MENUITEM_KEY_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
 INSTANCE MENUITEM_INP_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
-    text[1]                 = "Пожалуйста, нажмите клавишу для этого действия.";
+    text[1]                 = "ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ , Г­Г Г¦Г¬ГЁГІГҐ ГЄГ«Г ГўГЁГёГі Г¤Г«Гї ГЅГІГ®ГЈГ® Г¤ГҐГ©Г±ГІГўГЁГї.";
 
     onChgSetOption          = "keyIntSprint";
     onChgSetOptionSection   = "KEYS";

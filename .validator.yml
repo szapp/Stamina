@@ -1,0 +1,8 @@
+# This file is required for the patch-validator to work and may contain advanced configuration options
+# For more information, visit https://github.com/szapp/patch-validator/#configuration
+
+prefix:
+  # Re-definitions of the breath scripts: https://forum.worldofplayers.de/forum/threads/1558616
+  - Breath
+ignore-declaration:
+ignore-resource:
