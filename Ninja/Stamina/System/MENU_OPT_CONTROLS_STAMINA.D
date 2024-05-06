@@ -1,5 +1,5 @@
 // English
-instance MENUITEM_KEY_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_KEY_EN_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     text[0]             	= "Sprint";
     text[1]             	= "Press DEL to remove and ENTER to define a key.";
@@ -8,7 +8,7 @@ instance MENUITEM_KEY_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
     onSelAction_S[0]    	= "RUN MENUITEM_INP_EN_PATCH_STAMINA";
 };
 
-instance MENUITEM_INP_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_INP_EN_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     type       	 			= /*MENU_ITEM_INPUT*/ 3;
     text[1]     			= "Press the desired key.";
@@ -20,7 +20,7 @@ instance MENUITEM_INP_EN_PATCH_STAMINA(C_MENU_ITEM_DEF)
 
 
 // German
-instance MENUITEM_KEY_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_KEY_DE_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     text[0]             	= "Sprinten";
     text[1]             	= "Taste ENTF zum Löschen und RETURN zum definieren";
@@ -29,7 +29,7 @@ instance MENUITEM_KEY_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
     onSelAction_S[0]    	= "RUN MENUITEM_INP_DE_PATCH_STAMINA";
 };
 
-instance MENUITEM_INP_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_INP_DE_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     type        			= /*MENU_ITEM_INPUT*/ 3;
     text[1]     			= "Gewünschte Taste betätigen.";
@@ -41,7 +41,7 @@ instance MENUITEM_INP_DE_PATCH_STAMINA(C_MENU_ITEM_DEF)
 
 
 // Polish
-instance MENUITEM_KEY_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_KEY_PL_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     text[0]                 = "Sprint";
     text[1]                 = "DEL - usuwa, ENTER - przypisuje klawisz.";
@@ -50,7 +50,7 @@ instance MENUITEM_KEY_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
     onSelAction_S[0]        = "RUN MENUITEM_INP_PL_PATCH_STAMINA";
 };
 
-instance MENUITEM_INP_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_INP_PL_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
     text[1]                 = "Naci¶nij ¿±dany klawisz.";
@@ -62,7 +62,7 @@ instance MENUITEM_INP_PL_PATCH_STAMINA(C_MENU_ITEM_DEF)
 
 
 // Russian
-instance MENUITEM_KEY_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_KEY_RU_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     text[0]                 = "ñïðèíò";
     text[1]                 = "íàæìèòå DEL, ÷òîáû î÷èñòèòü ñëîò èëè ENTER, ÷òîáû ïåðåîïðåäåëèòü";
@@ -71,7 +71,7 @@ instance MENUITEM_KEY_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
     onSelAction_S[0]        = "RUN MENUITEM_INP_RU_PATCH_STAMINA";
 };
 
-instance MENUITEM_INP_RU_PATCH_STAMINA(C_MENU_ITEM_DEF)
+instance Menuitem_INP_RU_Patch_Stamina(Patch_Stamina_C_Menu_Item_Def /* C_Menu_Item_Def */)
 {
     type                    = /*MENU_ITEM_INPUT*/ 3;
     text[1]                 = "Ïîæàëóéñòà, íàæìèòå êëàâèøó äëÿ ýòîãî äåéñòâèÿ.";
