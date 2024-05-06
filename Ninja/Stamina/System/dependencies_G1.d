@@ -60,9 +60,9 @@ prototype Patch_Stamina_C_Menu_Item_Def(PATCH_STAMINA_C_MENU_ITEM /* C_Menu_Item
     onSelAction[0] = SEL_ACTION_BACK;
     onChgSetOption = "";
     onChgSetOptionSection = "INTERNAL";
-    hideIfOptionSectionSet = "";
-    hideIfOptionSet = "";
-    hideOnValue = -1;
     frameSizeX = 0;
     frameSizeY = 0;
+    // hideIfOptionSectionSet = "";
+    // hideIfOptionSet = "";
+    // hideOnValue = -1;
 };
