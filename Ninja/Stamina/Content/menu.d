@@ -101,7 +101,7 @@ func void Patch_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var i
  * Menu initialization function called by Ninja every time a menu is opened
  * Source: https://github.com/szapp/Ninja/wiki/Inject-Changes
  *
- * Note: This functions was slightly modified!
+ * Note: This function was slightly modified!
  */
 func void Patch_Stamina_AddKeyMenuEntry(var int menuPtr) {
     MEM_InitAll();
