@@ -10,7 +10,7 @@ Extend the native dive bar to a wider range of stamina decreasing actions like f
 This is a modular modification (a.k.a. patch or add-on) that can be installed and uninstalled at any time and is virtually compatible with any modification.
 It supports <kbd>Gothic 1</kbd>, <kbd>Gothic Sequel</kbd>, <kbd>Gothic II (Classic)</kbd> and <kbd>Gothic II: NotR</kbd>.
 
-###### Generated from [szapp/patch-template](https://github.com/szapp/patch-template).
+<sup>Generated from [szapp/patch-template](https://github.com/szapp/patch-template).</sup>
 
 ![Screenshot](https://github.com/szapp/Stamina/assets/20203034/8c8d7037-0e28-49d8-86fa-ce57faa2bdbe)
 
@@ -142,8 +142,8 @@ The patch is also available on
 ### Requirements
 
 <table><thead><tr><th>Gothic</th><th>Gothic Sequel</th><th>Gothic II (Classic)</th><th>Gothic II: NotR</th></tr></thead>
-<tbody><tr><td><a href="https://www.worldofgothic.de/dl/download_6.htm">Version 1.08k_mod</a></td><td>Version 1.12f</td><td><a href="https://www.worldofgothic.de/dl/download_278.htm">Report version 1.30.0.0</a></td><td><a href="https://www.worldofgothic.de/dl/download_278.htm">Report version 2.6.0.0</a></td></tr></tbody>
-<tbody><tr><td colspan="4" align="center"><a href="https://github.com/szapp/Ninja">Ninja 2.2.02</a> (or higher)</td></tr></tbody></table>
+<tbody><tr><td><a href="https://www.worldofgothic.de/dl/download_34.htm">Version 1.08k_mod</a></td><td>Version 1.12f</td><td><a href="https://www.worldofgothic.de/dl/download_278.htm">Report version 1.30.0.0</a></td><td><a href="https://www.worldofgothic.de/dl/download_278.htm">Report version 2.6.0.0</a></td></tr></tbody>
+<tbody><tr><td colspan="4" align="center"><a href="https://github.com/szapp/Ninja">Ninja 2.8</a> or higher</td></tr></tbody></table>
 
 <!--
 

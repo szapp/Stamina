@@ -51,7 +51,7 @@ func int Patch_Stamina_Npc_IsRunning(var C_Npc slf) {
             const int call = 0;
             const int ret = 0;
             CALL_PutRetValTo(_@(ret));
-            CALL__thiscall(_@(aiPtr), oCAniCtrl_Human__IsRunning[IDX_EXE]);
+            CALL__thiscall(_@(aiPtr), oCAniCtrl_Human__IsRunning[STAMINA_EXE]);
             call = CALL_End();
         };
 
@@ -132,9 +132,9 @@ func void Patch_Stamina_IntegratedSprint() {
                 if (CALL_Begin(call)) {
                     const int call = 0;
                     CALL_IntParam(_@(FALSE));
-                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[IDX_EXE]);
+                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[STAMINA_EXE]);
                     CALL_IntParam(_@(fmode));
-                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[IDX_EXE]);
+                    CALL__thiscall(_@(herPtr), oCNpc__SetWeaponMode2[STAMINA_EXE]);
                     call = CALL_End();
                 };
             };

@@ -62,20 +62,20 @@ func int Patch_Stamina_Mdl_OverlayMdsIsActive(var C_Npc slf, var string mdsName)
  */
 func void Patch_Stamina_HideWeaponTrails(var int hide) {
     const int oCAniCtrl_Human__ShowWeaponTrail[4] = {/*G1*/6452016, /*G1A*/6603616, /*G2*/6632944, /*G2A*/7011952};
-    var int byte; byte = MEM_ReadByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE]);
+    var int byte; byte = MEM_ReadByte(oCAniCtrl_Human__ShowWeaponTrail[STAMINA_EXE]);
 
     const int once = 0;
     if (!once) {
-        MemoryProtectionOverride(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], 1);
+        MemoryProtectionOverride(oCAniCtrl_Human__ShowWeaponTrail[STAMINA_EXE], 1);
         once = 1;
     };
 
     if (hide) {
         if (byte == /*0x64*/100) {
-            MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], ASMINT_OP_retn);
+            MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[STAMINA_EXE], ASMINT_OP_retn);
         };
     } else if (byte == ASMINT_OP_retn) {
-        MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[IDX_EXE], /*0x64*/100);
+        MEM_WriteByte(oCAniCtrl_Human__ShowWeaponTrail[STAMINA_EXE], /*0x64*/100);
     };
 };
 
@@ -112,7 +112,7 @@ func void Patch_Stamina_IntegratedStamina() {
             const int oCAniCtrl_Human__IsParadeRunning[4] = {/*G1*/6456432, /*G1A*/6608240, /*G2*/6638528, /*G2A*/7017808};
             if (CALL_Begin(call)) {
                 const int call = 0;
-                CALL__thiscall(_@(ESI), oCAniCtrl_Human__IsParadeRunning[IDX_EXE]);
+                CALL__thiscall(_@(ESI), oCAniCtrl_Human__IsParadeRunning[STAMINA_EXE]);
                 call = CALL_End();
             };
             if (CALL_RetValAsInt()) {
@@ -166,7 +166,7 @@ func void Patch_Stamina_IntegratedStamina() {
 func void Patch_Stamina_IntegratedStamina_Init() {
     const int oCAniCtrl_Human__StartHitCombo[4] = {/*G1*/6452587, /*G1A*/6604267, /*G2*/6633499, /*G2A*/7012555};
     const int oCAniCtrl_Human__HitCombo_next[4] = {/*G1*/6453169, /*G1A*/6604849, /*G2*/6634093, /*G2A*/7013146};
-    HookEngineF(oCAniCtrl_Human__StartHitCombo[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
-    HookEngineF(oCAniCtrl_Human__HitCombo_next[IDX_EXE], 8, Patch_Stamina_IntegratedStamina);
+    HookEngineF(oCAniCtrl_Human__StartHitCombo[STAMINA_EXE], 8, Patch_Stamina_IntegratedStamina);
+    HookEngineF(oCAniCtrl_Human__HitCombo_next[STAMINA_EXE], 8, Patch_Stamina_IntegratedStamina);
     Patch_Stamina_IntegratedStaminaLoad = TRUE; // First action after loading
 };

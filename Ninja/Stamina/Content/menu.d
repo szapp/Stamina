@@ -12,7 +12,7 @@ func int Patch_Stamina_CreateMenuItem(var string scriptName) {
         strPtr = _@s(scriptName);
         CALL_PtrParam(_@(strPtr));
         CALL_PutRetValTo(_@(ret));
-        CALL__cdecl(zCMenuItem__Create[IDX_EXE]);
+        CALL__cdecl(zCMenuItem__Create[STAMINA_EXE]);
         call = CALL_End();
     };
 
@@ -60,7 +60,7 @@ func int Patch_Stamina_MenuItemGetHeight(var int itmPtr) {
     if (CALL_Begin(call)) {
         const int call = 0;
         CALL_PutRetValTo(_@(fontHeight));
-        CALL__thiscall(_@(fontPtr), zCFont__GetFontY[IDX_EXE]);
+        CALL__thiscall(_@(fontPtr), zCFont__GetFontY[STAMINA_EXE]);
         call = CALL_End();
     };
 
@@ -91,7 +91,7 @@ func void Patch_Stamina_ArrayInsertAtPos(var int zCArray_ptr, var int pos, var i
         valuePtr = _@(value);
         CALL_IntParam(_@(pos));
         CALL_PtrParam(_@(valuePtr));
-        CALL__thiscall(_@(zCArray_ptr), zCArray__InsertAtPos[IDX_EXE]);
+        CALL__thiscall(_@(zCArray_ptr), zCArray__InsertAtPos[STAMINA_EXE]);
         call = CALL_End();
     };
 };

@@ -266,8 +266,8 @@ func void Breath_SetBarVisible(var int always) {
     const int oCNpc_divectr_offset[4]                  = {/*G1*/2068,    /*G1A*/2072,    /*G2*/1864,    /*G2A*/2004};
 
     // Shorthand
-    const int addr_1 = oCGame__UpdatePlayerStatus_swmBarJmp1[IDX_EXE];
-    const int addr_2 = oCGame__UpdatePlayerStatus_swmBarJmp2[IDX_EXE];
+    const int addr_1 = oCGame__UpdatePlayerStatus_swmBarJmp1[STAMINA_EXE];
+    const int addr_2 = oCGame__UpdatePlayerStatus_swmBarJmp2[STAMINA_EXE];
 
     const int once = 0;
     if (!once) {
@@ -285,7 +285,7 @@ func void Breath_SetBarVisible(var int always) {
     } else {
         // Revert the above change
         const int instr[4] = {/*EB 1C A4 00*/10755307, /*EB 1C A1 00*/10558699, 10755307, 10755307};
-        if (MEM_ReadInt(  addr_1) == instr[IDX_EXE]) {                // Compare 4 bytes, because of third-party changes
+        if (MEM_ReadInt(  addr_1) == instr[STAMINA_EXE]) {            // Compare 4 bytes, because of third-party changes
             MEM_WriteByte(addr_1,    /*0F*/ 15);                      // jz
             MEM_WriteByte(addr_1+1,  /*84*/132);
         };
@@ -293,10 +293,10 @@ func void Breath_SetBarVisible(var int always) {
         if (MEM_ReadByte( addr_2) == /*E8*/232) {
             MEM_WriteByte(addr_2,    /*8B*/139);                      // mov
             MEM_WriteByte(addr_2+1,  /*81*/129);                      // eax,
-            MEM_WriteInt( addr_2+2,  oCNpc_divetime_offset[IDX_EXE]); // [offset oCNpc.divetime]
+            MEM_WriteInt( addr_2+2,  oCNpc_divetime_offset[STAMINA_EXE]); // [offset oCNpc.divetime]
             MEM_WriteByte(addr_2+6,  /*3B*/ 59);                      // cmp
             MEM_WriteByte(addr_2+7,  /*81*/129);                      // eax,
-            MEM_WriteInt( addr_2+8,  oCNpc_divectr_offset[IDX_EXE]);  // [offset oCNpc.divectr]
+            MEM_WriteInt( addr_2+8,  oCNpc_divectr_offset[STAMINA_EXE]);  // [offset oCNpc.divectr]
             MEM_WriteByte(addr_2+12, /*0F*/ 15);                      // jz
             MEM_WriteByte(addr_2+13, /*84*/132);
         };
@@ -343,7 +343,7 @@ func void _Breath_RegenHook() {
  *
 func void Breath_Init_slow() {
     const int oCNpc__Process_diveRegen[4] = {/*G1* 6926517, /*G1A* 7131257, /*G2* 7208440, /*G2A*7595752};
-    const int addr = oCNpc__Process_diveRegen[IDX_EXE]; // Shorthand
+    const int addr = oCNpc__Process_diveRegen[STAMINA_EXE]; // Shorthand
 
     // Only perform changes if bytes are not already modified
     if (MEM_ReadInt(addr + 2) == _@(MEM_Timer.frameTimeFloat)) {
@@ -394,7 +394,7 @@ func void Breath_Init() {
     const int oCNpc_divectr_offset_[4]    = {/*G1*/2068,    /*G1A*/2072,    /*G2*/1864,    /*G2A*/2004};
 
     // Shorthand
-    const int addr = oCNpc__Process_diveRegen[IDX_EXE];
+    const int addr = oCNpc__Process_diveRegen[STAMINA_EXE];
 
     // Assembly instructions
     const int ASMINT_OP_pushESI          =    86; //0x56
@@ -422,9 +422,9 @@ func void Breath_Init() {
         MEM_WriteInt (addr + 1, ASM_Here() - addr - 5);
 
         // Save breath value of player
-        ASM_2(ASMINT_OP_cmpESItoMem);      ASM_4(oCNpc_player_[IDX_EXE]);
+        ASM_2(ASMINT_OP_cmpESItoMem);      ASM_4(oCNpc_player_[STAMINA_EXE]);
         ASM_1(ASMINT_OP_jnzShort);         ASM_1(12);
-        ASM_2(ASMINT_OP_movESIplusToECX);  ASM_4(oCNpc_divectr_offset_[IDX_EXE]);
+        ASM_2(ASMINT_OP_movESIplusToECX);  ASM_4(oCNpc_divectr_offset_[STAMINA_EXE]);
         ASM_2(ASMINT_OP_movECXtoMem);      ASM_4(_@(_Breath_player));
 
         // Load regeneration factors
@@ -440,7 +440,7 @@ func void Breath_Init() {
         ASM_1(ASMINT_OP_pushESI);
         ASM_2(ASMINT_OP_movESPtoEAX);
         ASM_1(ASMINT_OP_pushEAX);
-        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__IsInList_[IDX_EXE] - (ASM_Here()+4));
+        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__IsInList_[STAMINA_EXE] - (ASM_Here()+4));
         ASM_1(ASMINT_OP_popECX);
         ASM_2(ASMINT_OP_testEAXtoEAX);
         ASM_1(ASMINT_OP_jzShort);          ASM_1(18);
@@ -451,7 +451,7 @@ func void Breath_Init() {
         ASM_2(ASMINT_OP_movESPtoEAX);
         ASM_1(ASMINT_OP_pushEAX);
         ASM_2(ASMINT_OP_movMemToECX);      ASM_4(_@(_Breath_DontRegen));
-        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__Remove_[IDX_EXE] - (ASM_Here()+4));
+        ASM_1(ASMINT_OP_call);             ASM_4(zCArray_zCVob__Remove_[STAMINA_EXE] - (ASM_Here()+4));
         ASM_1(ASMINT_OP_popECX);
 
         // Multiply regeneration factors

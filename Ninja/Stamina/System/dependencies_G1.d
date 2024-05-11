@@ -42,7 +42,7 @@ prototype Patch_Stamina_C_Menu_Item_Def(PATCH_STAMINA_C_MENU_ITEM /* C_Menu_Item
     const int IT_SELECTABLE        = 4;
     const int SEL_ACTION_BACK      = 1;
 
-    fontName = "font_old_20_white.tga";
+    fontName = MENU_FONT_DEFAULT;
     text = "";
     alphaMode = "BLEND";
     alpha = 254;
