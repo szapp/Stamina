@@ -97,7 +97,7 @@ func int Patch_Stamina_Npc_IsRunning(var C_Npc slf) {
 func void Patch_Stamina_IntegratedSprint() {
     const int THRESHOLD_MS             = 1161527296; // 3000.0f
     const int ACTION_WATERWALK         = 4;          // oCAniCtrl_Human.actionMode
-    const int oCNpc__SetWeaponMode2[4] = {/*G1*/6904416, /*G1A*/7107152, /*G2*/7185696, /*G2A*/7573120};
+    const int oCNpc__SetWeaponMode2[4] = {/*G1*/6904416, /*G1A*/7107744, /*G2*/7186240, /*G2A*/7573120};
 
     var oCNpc her; her = Hlp_GetNpc(hero);
     var oCAniCtrl_Human ai; ai = _^(her.human_ai);
