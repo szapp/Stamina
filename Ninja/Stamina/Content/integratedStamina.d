@@ -124,17 +124,17 @@ func void Patch_Stamina_IntegratedStamina() {
     // Determine decrement/cost
     var int decr;
     if (fists) {
-        if      (parade)   {  decr = Patch_Stamina_FIST_FIRSTHIT; }
-        else if (firstHit) {  decr = Patch_Stamina_FIST_COMBO;    }
-        else /*followHit*/ {  decr = Patch_Stamina_FIST_PARADE;   };
+        if      (parade)   {  decr = Patch_Stamina_FIST_PARADE;   }
+        else if (firstHit) {  decr = Patch_Stamina_FIST_FIRSTHIT; }
+        else /*followHit*/ {  decr = Patch_Stamina_FIST_COMBO;    };
     } else if (twoHanded)  {
-        if      (parade)   {  decr = Patch_Stamina_1H_FIRSTHIT;   }
-        else if (firstHit) {  decr = Patch_Stamina_1H_COMBO;      }
-        else /*followHit*/ {  decr = Patch_Stamina_1H_PARADE;     };
+        if      (parade)   {  decr = Patch_Stamina_1H_PARADE;     }
+        else if (firstHit) {  decr = Patch_Stamina_1H_FIRSTHIT;   }
+        else /*followHit*/ {  decr = Patch_Stamina_1H_COMBO;      };
     } else   /*oneHanded*/ {
-        if      (parade)   {  decr = Patch_Stamina_2H_FIRSTHIT;   }
-        else if (firstHit) {  decr = Patch_Stamina_2H_COMBO;      }
-        else /*followHit*/ {  decr = Patch_Stamina_2H_PARADE;     };
+        if      (parade)   {  decr = Patch_Stamina_2H_PARADE;     }
+        else if (firstHit) {  decr = Patch_Stamina_2H_FIRSTHIT;   }
+        else /*followHit*/ {  decr = Patch_Stamina_2H_COMBO;      };
     };
 
     // Decrease breath or disable actions by animation
