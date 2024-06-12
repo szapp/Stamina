@@ -9,8 +9,8 @@ func void Ninja_Stamina_Menu(var int menuPtr) {
         MEM_InitAll();
 
         // Version check
-        if (NINJA_VERSION < 2800) {
-            MEM_SendToSpy(zERR_TYPE_FATAL, "Stamina requires at least Ninja 2.8 or higher.");
+        if (NINJA_VERSION < 2915) {
+            MEM_SendToSpy(zERR_TYPE_FATAL, "Stamina requires at least Ninja 2.9.15 or higher.");
         };
 
         // Check if the script features are already present in the mod
