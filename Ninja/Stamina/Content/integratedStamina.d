@@ -27,6 +27,7 @@
 
 // In this patch, these symbols are defined elsewhere with different names
 // const string IntegratedStamina_Mds = "HUMANS_DISABLE_MELEE.MDS"; // MDS overlay name
+// const int    IntegratedStamina_Load = 1;                         // Internal
 // var   int    IntegratedStamina_FIST_PARADE;                      // Breath cost in percent
 // var   int    IntegratedStamina_FIST_FIRSTHIT;                    // Breath cost in percent
 // var   int    IntegratedStamina_FIST_COMBO;                       // Breath cost in percent
